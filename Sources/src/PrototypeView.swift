@@ -5,7 +5,8 @@
 //  Created by Wilhelm Oks on 21.05.23.
 //
 
-import TokamakShim
+import TokamakDOM
+//import JavaScriptKit
 
 struct PrototypeView: View {
     @State private var points = 0
@@ -30,6 +31,15 @@ struct PrototypeView: View {
                 
                 //Spacer()
             }
+            
+            /*
+            Button("save") {
+                save()
+            }
+            
+            Button("load") {
+                load()
+            }*/
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
@@ -39,13 +49,25 @@ struct PrototypeView: View {
                 .foregroundColor(.init(white: 0.965))
         }
         .task {
+            load()
             await tick()
         }
     }
     
-    func tick() async {
+    func save() {
+        LocalStorage.standard.store(key: "points", value: points)
+        LocalStorage.standard.store(key: "pointGenerators", value: pointGenerators)
+    }
+    
+    func load() {
+        points = Int(LocalStorage.standard.read(key: "points") ?? 0.0)
+        pointGenerators = Int(LocalStorage.standard.read(key: "pointGenerators") ?? 0.0)
+    }
+    
+    @MainActor func tick() async {
         points += pointGenerators
-        try? await Task.sleep(nanoseconds: 1_000_000_000 / 10)
+        save()
+        try? await Task.sleep(nanoseconds: 1_000_000_000 / 3)
         await tick()
     }
 }

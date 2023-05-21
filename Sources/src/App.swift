@@ -1,10 +1,10 @@
-import TokamakShim
+import TokamakDOM
 import srcLibrary
 
 @main
 struct TokamakApp: App {
     var body: some Scene {
-        WindowGroup("Tokamak App") {
+        WindowGroup("AGI Test App") {
             ContentView()
         }
     }
