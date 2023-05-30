@@ -45,8 +45,9 @@ struct PrototypeView: View {
         .padding(.vertical, 12)
         .background {
             RoundedRectangle(cornerRadius: 10)
-                //.shadow(radius: 10)
-                .foregroundColor(.init(white: 0.965))
+                .stroke(lineWidth: 2)
+                .foregroundColor(.primary)
+                //.padding(-11)
         }
         .task {
             load()
